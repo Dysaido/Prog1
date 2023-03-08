@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-const int PI = 3.14;
+const float PI = 3.14;
 
 float terulet(int sugar) {
     return sugar * sugar * PI;
@@ -14,8 +14,8 @@ float kerulet(int sugar) {
 int main() {
     int sugar;
     printf("Kerlek add meg a kor sugarat: \n");
-    scanf("&d", &sugar);
-    printf("Terulet: %d\n", terulet(sugar));
-    printf("Kerulet: %d\n", kerulet(sugar));
+    scanf("%d", &sugar);
+    printf("Terulet: %f\n", terulet(sugar));
+    printf("Kerulet: %f\n", kerulet(sugar));
     return 0;
 }
