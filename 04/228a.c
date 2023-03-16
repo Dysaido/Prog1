@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// Haromszog ellenorzese, az oldalak hosszai a bemeneti ertekek, igaz(1)-hamis(0) a visszateresi ertek
 int valid_triange(int a, int b, int c);
 
 int main() {
@@ -23,7 +24,8 @@ int main() {
 // 0/1
 int valid_triange(int a, int b, int c) {
     int ret = 0;
-    if ((a + b > c) | (a + c > b) | (b + c > a)) {
+    // a < b + c; b < a + c; c < b + a
+    if ((a < b + c) && (b < a + c) && (c < b + a)) {
         ret = 1;
     }
     return ret;
