@@ -22,32 +22,31 @@ string get_string(const string str)
     Feltetel, karakter ASCII kodjat varja, igaz-hamis visszateresi ertekel
     Visszater igazal/hamisal felteteltol fuggoen
 */
-int all_match(string str, int (*predicate)(int input))
+int any_match(string str, int (*predicate)(int))
 {
-    int ret = 0;
     for (int i = 0; str[i] != '\0'; ++i)
     {
         char c = str[i];
         if (predicate(c))
         {
-            ret = 1;
+            return 1;
         }
     }
 
-    return ret;
+    return 0;
 }
 
 // Teszteset, tesztelni kivant string
 // Visszater igaz ill. hamis ertekkel
-int test(string str)
+int isvalidpsw(string str)
 {
     int len = strlen(str) - 1;
     int ret = 0;
     if (len >= 8)                               // Legalabb 8 karaktert tartalmaz
     {
-        if (all_match(str, &isdigit)            // Van-e benne szam 
-                && all_match(str, &islower)     // Van-e benne kisbetu
-                && all_match(str, &isupper))    // Van-e benne nagybetu
+        if (any_match(str, isdigit)            // Van-e benne szam 
+                && any_match(str, islower)     // Van-e benne kisbetu
+                && any_match(str, isupper))    // Van-e benne nagybetu
         {        
             ret = 1;   
         }
@@ -60,17 +59,13 @@ int main()
 {
     printf("Adj meg jelszavakat '*' végjelig!\n");
 
-    while(1)
-    {
-        string str = get_string("jelszó: ");
-        if (strcmp("*", str) == 0) 
-        {
-            break;
-        } 
-        else if (test(str) == 0) {
+    string str = get_string("jelszó: ");
+    do {
+        if (isvalidpsw(str) == 0) {
             puts("gyenge jelszó");
         }
-    }
-
+        str = get_string("jelszó: ");
+    } while (strcmp("*", str) != 0);
+    
     return 0;
 }
