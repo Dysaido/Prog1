@@ -59,6 +59,19 @@ void add_element(DyArray* arr, int element)
     arr->lenght++;
 }
 
+void da_clear(DyArray *self)
+{
+    int lenght = self->lenght;
+    if (lenght > 0)
+    {
+        for (int i = 0; i < lenght; ++i)
+        {
+            self->elements[i] = 0;
+        }
+        self->lenght = 0;
+    }
+}
+
 void elements_from(const char* name, DyArray *arr)
 {
     FILE *fp = fopen(name, "r");
@@ -135,9 +148,12 @@ void quicksort(DyArray *arr, int bal, int jobb)
 void print_array(int lenght, int array[])
 {
     printf("A tömb elemei: ");
+    int count = 0;
     for (int i = 0; i < lenght; ++i) 
     {
         printf("%d ", array[i]);
+        if (count == 100) break;
+        count++;
     }
     puts("");
 }
@@ -150,10 +166,23 @@ int main(int argc, char** argv)
     }
     const char* name = argv[1];
     DyArray *arr = create_dyarr();
-
+    
+    printf("Befor clear \n");
     elements_from(name, arr);
+    print_array(arr->lenght, arr->elements);
+    da_clear(arr);
+    
+    printf("After clear \n");
+    print_array(arr->lenght, arr->elements);
+
+    
+    printf("Read again \n");
+    elements_from(name, arr);
+    
     quicksort(arr, 0, arr->lenght - 1);
-    //arrsort(arr);
+
+    print_array(arr->lenght, arr->elements);
+
     write_arr_to(name, arr);
 
     arr = destroy_dyarr(arr);
